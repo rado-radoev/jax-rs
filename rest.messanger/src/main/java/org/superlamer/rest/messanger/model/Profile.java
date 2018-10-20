@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Profile {
 
-	private long id;
+	private long id = 0;
 	private String profileName;
 	private String firstName;
 	private String lastName;
@@ -17,18 +17,13 @@ public class Profile {
 		
 	}
 	
-	
-
-	public Profile(long id, String profileName, String firstName, String lastName) {
+	public Profile(String profileName, String firstName, String lastName) {
 		super();
-		this.id = id;
 		this.profileName = profileName;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.created = new Date();
 	}
-
-
 
 	public long getId() {
 		return id;
