@@ -7,7 +7,7 @@ import javax.ws.rs.ext.Provider;
 
 import org.superlamer.rest.messanger.model.Error;
 
-@Provider
+//@Provider
 public class GenericExceptionMapper implements ExceptionMapper<Throwable>{
 	
 	@Override
