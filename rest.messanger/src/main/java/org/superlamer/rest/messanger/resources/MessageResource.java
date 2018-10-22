@@ -1,5 +1,7 @@
 package org.superlamer.rest.messanger.resources;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 
 import javax.ws.rs.BeanParam;
@@ -12,7 +14,11 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
+import javax.ws.rs.core.UriInfo;
 
 import org.superlamer.rest.messanger.beans.MessageFilterBeans;
 import org.superlamer.rest.messanger.model.Message;
@@ -31,7 +37,7 @@ public class MessageResource {
 			return messageService.getAllMessagesForYear(filterBean.getYear() );
 		}
 		
-		if (filterBean.getStart() >= 0 && filterBean.getSize() >= 0) {
+		if (filterBean.getStart() >= 0 && filterBean.getSize() > 0) {
 			return messageService.getAllMessagesPaginated(filterBean.getStart(), filterBean.getSize());
 		}
 		
@@ -44,9 +50,23 @@ public class MessageResource {
 		return messageService.getMessage(messageId);
 	}
 	
+	@Path("/{messageId}/comments")
+	public CommentResource getCommentResource() {
+		return new CommentResource(); 
+	}
+	
+	
 	@POST
-	public Message addMessage(Message message) {
-		return messageService.addMessage(message);
+	public Response addMessage(Message message, @Context UriInfo uriInfo) {
+		Message newMessage = messageService.addMessage(message);
+		String newId = String.valueOf(newMessage.getId());
+		URI uri = uriInfo.getAbsolutePathBuilder().path(newId).build();
+		
+		return Response.created(uri)
+				.status(Status.OK)
+				.entity(newMessage)
+				.build();
+		//		return messageService.addMessage(message);
 	}
 	
 	@PUT
