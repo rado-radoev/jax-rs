@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.superlamer.rest.messanger.database.DatabaseClass;
+import org.superlamer.rest.messanger.exception.DataNotFoundException;
 import org.superlamer.rest.messanger.model.Message;
 
 public class MessageService {
@@ -42,7 +43,11 @@ public class MessageService {
 	
 	
 	public Message getMessage(long id) {
-		return messages.get(id);
+		Message message =  messages.get(id);
+		if (message == null) {
+			throw new DataNotFoundException("Message with id " + id + " not found");
+		} 
+		return message;
 	}
 	
  	public Message addMessage(Message message) {
