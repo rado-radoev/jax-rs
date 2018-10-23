@@ -55,9 +55,9 @@ public class MessageResource {
 	}
 
 	private String getUriForSelf(UriInfo uriInfo, Message message) {
-		String uri = uriInfo.getBaseUriBuilder()
-				.path(MessageResource.class)
-				.path(Long.toString(message.getId()))
+		String uri = uriInfo.getBaseUriBuilder() // http://localhost:8080/messenger/webapi
+				.path(MessageResource.class) // messages
+				.path(Long.toString(message.getId())) // {messageId}
 				.build()
 				.toString();
 		return uri;
