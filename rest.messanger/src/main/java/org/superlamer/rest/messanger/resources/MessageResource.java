@@ -50,9 +50,31 @@ public class MessageResource {
 							  @Context UriInfo uriInfo) {
 		Message message = messageService.getMessage(messageId);
 		message.addLink(getUriForSelf(uriInfo, message), "self");
+		message.addLink(getUriForProfile(uriInfo, message), "profile");
+		message.addLink(getUriForComments(uriInfo, message), "comments");
 		
 		return message;
 	}
+
+	private String getUriForComments(UriInfo uriInfo, Message message) {
+		URI uri = uriInfo.getBaseUriBuilder() // http://localhost:8080/messenger/webapi/
+				.path(MessageResource.class) 
+				.path(MessageResource.class, "getCommentResource")
+				.path(CommentResource.class)
+				.resolveTemplate("messageId", message.getId())
+				.build();
+		
+		return uri.toString();
+	}
+
+	private String getUriForProfile(UriInfo uriInfo, Message message) {
+		URI uri = uriInfo.getBaseUriBuilder() // http://localhost:8080/messenger/webapi/
+				.path(ProfileResource.class) 	// /profiles
+				.path(message.getAuthor())		// {author}
+				.build();
+			
+		return uri.toString();
+	}	
 
 	private String getUriForSelf(UriInfo uriInfo, Message message) {
 		String uri = uriInfo.getBaseUriBuilder() // http://localhost:8080/messenger/webapi
