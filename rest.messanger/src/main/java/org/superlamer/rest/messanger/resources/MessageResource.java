@@ -1,4 +1,4 @@
-package org.superlamer.rest.messanger.resources;
+ package org.superlamer.rest.messanger.resources;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -46,8 +46,21 @@ public class MessageResource {
 	
 	@GET
 	@Path("/{messageId}")
-	public Message getMessage(@PathParam("messageId") Long messageId) {
-		return messageService.getMessage(messageId);
+	public Message getMessage(@PathParam("messageId") Long messageId,
+							  @Context UriInfo uriInfo) {
+		Message message = messageService.getMessage(messageId);
+		message.addLink(getUriForSelf(uriInfo, message), "self");
+		
+		return message;
+	}
+
+	private String getUriForSelf(UriInfo uriInfo, Message message) {
+		String uri = uriInfo.getBaseUriBuilder()
+				.path(MessageResource.class)
+				.path(Long.toString(message.getId()))
+				.build()
+				.toString();
+		return uri;
 	}
 	
 	@Path("/{messageId}/comments")
