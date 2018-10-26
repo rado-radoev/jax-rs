@@ -7,22 +7,23 @@ import javax.jws.WebService;
 
 import org.superklamer.business.ProductServiceImpl;
 
-@WebService
+@WebService(name="TestMartCatalog", portName="TestMartCatalogPort", 
+			serviceName="TestMartCatalogService", targetNamespace="http://www.testmart.com")
 public class ProductCatalog {
 	
 	ProductServiceImpl productService = new ProductServiceImpl();
 
-	@WebMethod
+	@WebMethod(action="fetch_categories", operationName="fetchCategories")
 	public List<String> getProductCategories() {
 		return productService.getProductCategories();
 	}
 	
-	@WebMethod
+	@WebMethod(exclude=true)
 	public List<String> getProducts(String category) {
 		return productService.getProducts(category);
 	}
 	
-	@WebMethod
+	@WebMethod(exclude=true)
 	public boolean addProduct(String category, String product) {
 		return productService.addProduct(category, product);
 	}
