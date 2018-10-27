@@ -2,29 +2,35 @@ package org.superklamer;
 
 import java.util.List;
 
-import javax.jws.WebMethod;
 import javax.jws.WebService;
 
 import org.superklamer.business.ProductServiceImpl;
+import org.superklamer.model.Product;
 
-@WebService(name="TestMartCatalog", portName="TestMartCatalogPort", 
+@WebService(endpointInterface="org.superklamer.ProductCatalogInterface",
+			name="TestMartCatalog", portName="TestMartCatalogPort", 
 			serviceName="TestMartCatalogService", targetNamespace="http://www.testmart.com")
-public class ProductCatalog {
+public class ProductCatalog implements ProductCatalogInterface {
 	
 	ProductServiceImpl productService = new ProductServiceImpl();
 
-	@WebMethod(action="fetch_categories", operationName="fetchCategories")
+	@Override
 	public List<String> getProductCategories() {
 		return productService.getProductCategories();
 	}
 	
-	@WebMethod(exclude=true)
+	@Override
 	public List<String> getProducts(String category) {
 		return productService.getProducts(category);
 	}
 	
-	@WebMethod(exclude=true)
+	@Override
 	public boolean addProduct(String category, String product) {
 		return productService.addProduct(category, product);
+	}
+	
+	@Override
+	public List<Product> getProductsv2(String category) {
+		return productService.getProductsv2(category);
 	}
 }

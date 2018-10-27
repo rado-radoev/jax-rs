@@ -3,6 +3,8 @@ package org.superklamer.business;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.superklamer.model.Product;
+
 public class ProductServiceImpl {
 	
 	List<String> bookList = new ArrayList<>();
@@ -62,5 +64,14 @@ public class ProductServiceImpl {
 		}
 		
 		return true;
+	}
+
+	public List<Product> getProductsv2(String category) {
+		List<Product> productList = new ArrayList<>();
+		
+		productList.add(new Product("JavaBrains Book", "1234", 99999.55));
+		productList.add(new Product("Another Book", "4566", 890.88));
+		
+		return productList;
 	}
 }
