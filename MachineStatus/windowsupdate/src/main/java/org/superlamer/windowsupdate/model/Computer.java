@@ -3,19 +3,24 @@ package org.superlamer.windowsupdate.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.json.bind.annotation.JsonbTransient;
+import javax.xml.bind.annotation.XmlTransient;
+
 public class Computer {
 	
 	private String computerName;
-	private String OSType;
+	private String osVersion;
 	private List<Link> links = new ArrayList<>();
+	private static List<String> osVersions = new ArrayList<>();
 	
 	public Computer() {}
 	
 	
-	public Computer(String computerName, String oSType) {
+	public Computer(String computerName, String osVersion) {
 		super();
 		this.computerName = computerName;
-		OSType = oSType;
+		this.osVersion = osVersion;
+		addOsVersions(osVersion);
 	}
 
 	public String getComputerName() {
@@ -26,12 +31,28 @@ public class Computer {
 		this.computerName = computerName;
 	}
 	
-	public String getOSType() {
-		return OSType;
+	public String getOsVersion() {
+		return osVersion;
 	}
 	
-	public void setOSType(String oSType) {
-		OSType = oSType;
+	public void setOsVersion(String oSType) {
+		osVersion = oSType;
+	}
+	
+	@JsonbTransient
+	@XmlTransient
+	public static List<String> getOsVersions() {
+		return osVersions;
+	}
+
+	public static void setOsVersionsList(List<String> osVersions) {
+		Computer.osVersions = osVersions;
+	}
+	
+	public static void addOsVersions(String osVersion) {
+		if (!Computer.osVersions.contains(osVersion)) {
+			Computer.osVersions.add(osVersion);
+		}
 	}
 	
 	public List<Link> getLinks() {
@@ -51,7 +72,7 @@ public class Computer {
 	
 	@Override
 	public String toString() { 
-		return String.format("Computer: %s is running: %s", computerName, OSType); 
+		return String.format("Computer: %s is running: %s", computerName, osVersion); 
 	}
 	
 	
