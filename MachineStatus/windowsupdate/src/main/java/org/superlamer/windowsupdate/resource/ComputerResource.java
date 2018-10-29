@@ -5,8 +5,11 @@ import java.util.List;
 import javax.ws.rs.BeanParam;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.GET;
 
 import org.superlamer.windowsupdate.beans.ComputerFilterBeans;
@@ -37,8 +40,27 @@ public class ComputerResource {
 		}
 		
 		return computerService.getAllComputers();
-			
+	}
+	
+	
+	@GET
+	@Path("/{computerName}")
+	public Computer getComputer(@PathParam("computerName") String computerName,
+								@Context UriInfo uriInfo) {
+		Computer computer = computerService.getComputer(computerName);
+		computer.addLinks(getUriForSelf(uriInfo, computer), "self");
 		
+		return computer;
+	}
+	
+	private String getUriForSelf(UriInfo uriInfo, Computer computer) {
+		String uri = uriInfo.getBaseUriBuilder()
+				.path(ComputerResource.class)
+				.path(computer.getComputerName())
+				.build()
+				.toString();
+		
+		return uri;
 	}
 
 }
