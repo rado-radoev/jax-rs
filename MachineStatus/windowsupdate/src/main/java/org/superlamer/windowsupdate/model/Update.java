@@ -3,6 +3,8 @@ package org.superlamer.windowsupdate.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlTransient;
+
 public class Update {
 	
 	private long kbNumber;
@@ -53,6 +55,7 @@ public class Update {
 		this.size = size;
 	}
 
+	@XmlTransient
 	public List<Link> getLinks() {
 		return links;
 	}

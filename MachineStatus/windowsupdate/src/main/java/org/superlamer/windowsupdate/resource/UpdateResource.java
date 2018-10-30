@@ -29,14 +29,22 @@ public class UpdateResource {
     public Update getUpdate(@PathParam("computerName") String computerName,
     						@PathParam("kbNumber") long kbNumber,
     						@Context UriInfo uriInfo) {
-    	return updateService.getUpdte(computerName, kbNumber);
+    	
+    	Update update = updateService.getUpdte(computerName, kbNumber);
+    	update.addLinks(getUriForSelf(uriInfo, update), "self");
+    	
+    	return update;
     }
     
     @POST
     public Update addUpdate(@PathParam("computerName") String computerName,
-    						Update update) {
+    						Update update,
+    						@Context UriInfo uriInfo) {
     	System.out.println("Update Resource - POST: " + computerName + " " + update.toString());
-    	return updateService.addUpdate(computerName, update);
+
+    	update.addLinks(getUriForSelf(uriInfo, update), "self");
+    	
+    	return update;
     }
     
     @PUT
@@ -51,6 +59,16 @@ public class UpdateResource {
     public Update removeUpdate(@PathParam("computerName") String computerName,
     							@PathParam("kbNumber") long kbNumber) {
     	return updateService.removeUpdate(computerName, kbNumber);
+    }
+    
+    public String getUriForSelf(UriInfo uriInfo, Update update) {
+    	String uri = uriInfo.getAbsolutePathBuilder()
+    						.path(UpdateResource.class)
+    						.path(String.valueOf(update.getKbNumber()))
+    						.build()
+    						.toString();
+    	
+    	return uri;
     }
 
 }

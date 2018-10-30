@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.json.bind.annotation.JsonbTransient;
 import javax.xml.bind.annotation.XmlTransient;
 
 import org.superlamer.windowsupdate.dtabase.DatabaseClass;
@@ -67,6 +68,8 @@ public class Computer {
 		}
 	}
 	
+	@JsonbTransient
+	@XmlTransient
 	public List<Link> getLinks() {
 		return links;
 	}
