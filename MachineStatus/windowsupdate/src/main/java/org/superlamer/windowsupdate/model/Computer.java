@@ -7,13 +7,15 @@ import java.util.Map;
 
 import javax.xml.bind.annotation.XmlTransient;
 
+import org.superlamer.windowsupdate.dtabase.DatabaseClass;
+
 public class Computer {
 	
 	private String computerName;
 	private String osVersion;
 	private List<Link> links = new ArrayList<>();
 	private static List<String> osVersions = new ArrayList<>();
-	private Map<Long, Update> updates = new HashMap<>();
+	private Map<Long, Update> updates = DatabaseClass.getUpdates();
 	
 	public Computer() {}
 	
@@ -41,7 +43,7 @@ public class Computer {
 		osVersion = oSType;
 	}
 	
-	@XmlTransient
+
 	public Map<Long, Update> getUpdates() {
 		return updates;
 	}

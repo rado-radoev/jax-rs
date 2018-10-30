@@ -8,6 +8,8 @@ import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.UriInfo;
 
 import org.superlamer.windowsupdate.model.Update;
 import org.superlamer.windowsupdate.service.UpdateService;
@@ -25,13 +27,15 @@ public class UpdateResource {
     @GET
     @Path("/{kbNumber}")
     public Update getUpdate(@PathParam("computerName") String computerName,
-    						@PathParam("kbNumber") long kbNumber) {
+    						@PathParam("kbNumber") long kbNumber,
+    						@Context UriInfo uriInfo) {
     	return updateService.getUpdte(computerName, kbNumber);
     }
     
     @POST
     public Update addUpdate(@PathParam("computerName") String computerName,
     						Update update) {
+    	System.out.println("Update Resource - POST: " + computerName + " " + update.toString());
     	return updateService.addUpdate(computerName, update);
     }
     

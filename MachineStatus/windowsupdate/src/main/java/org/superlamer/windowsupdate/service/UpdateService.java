@@ -39,24 +39,35 @@ public class UpdateService {
 			throw new NotFoundException(response);
 		}
 		
+		computers.get(computerName).setUpdates(updates);
+		
 		return update;
 	}
 	
 	public Update addUpdate(String computerName, Update update) {
 		Map<Long, Update> updates = computers.get(computerName).getUpdates();
 		
+		System.out.println("Update Serivce before updates:" + updates);
+		
 		updates.put(update.getKbNumber(), update);
+		System.out.println("Update Serivce after updates:" + updates);
+		
+		computers.get(computerName).setUpdates(updates);
+		
+		System.out.println("Update Serivce computer updates after updates:" + computers.get(computerName).getUpdates());
+		
 		
 		return update;
 	}
 	
 	public Update updateUpdate(String computerName, Update update) {
 		Map<Long, Update> updates = computers.get(computerName).getUpdates();
-		if (update.getKbNumber() <= 0) {
+		if (updates.size() <= 0) {
 			return null;
 		}
 		
 		updates.put(update.getKbNumber(), update);
+		computers.get(computerName).setUpdates(updates);
 		
 		return update;
 	}
@@ -67,7 +78,9 @@ public class UpdateService {
 			return null;
 		}
 		
-		return updates.remove(kbNumber);
+		Update update = updates.remove(kbNumber);
+		computers.get(computerName).setUpdates(updates);
+		return update;
 	}
 
 }

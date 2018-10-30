@@ -56,6 +56,7 @@ public class ComputerResource {
 								@Context UriInfo uriInfo) {
 		Computer computer = computerService.getComputer(computerName);
 		computer.addLinks(getUriForSelf(uriInfo, computer), "self");
+		computer.addLinks(getUriForUpdates(uriInfo, computer), "comments");
 		
 		return computer;
 	}
@@ -70,12 +71,24 @@ public class ComputerResource {
 		return uri;
 	}
 	
+	private String getUriForUpdates(UriInfo uriInfo, Computer computer) {
+		URI uri = uriInfo.getBaseUriBuilder()
+						.path(ComputerResource.class)
+						.path(ComputerResource.class, "getUpdateResource")
+						.path(UpdateResource.class)
+						.resolveTemplate("computerName", computer.getComputerName())
+						.build();
+		
+		return uri.toString();
+	}
+	
 	@POST
 	public Response addComputer(Computer computer, @Context UriInfo uriInfo) {
 		Computer newComputer = computerService.addComputer(computer);
 		URI uri = uriInfo.getAbsolutePathBuilder().path(computer.getComputerName()).build();
 		System.out.println(uri.toString());
 		computer.addLinks(String.valueOf(uri), "self");
+		computer.addLinks(getUriForUpdates(uriInfo, computer), "comments");
 		
 		return Response.created(uri)
 						.status(Status.OK)
