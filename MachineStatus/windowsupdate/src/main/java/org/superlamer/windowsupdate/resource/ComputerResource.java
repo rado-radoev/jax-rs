@@ -1,20 +1,27 @@
 package org.superlamer.windowsupdate.resource;
 
+import java.net.URI;
 import java.util.List;
 
 import javax.ws.rs.BeanParam;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
+import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.core.Response;
 
 import org.superlamer.windowsupdate.beans.ComputerFilterBeans;
 import org.superlamer.windowsupdate.model.Computer;
 import org.superlamer.windowsupdate.service.ComputerService;
+
 
 @Path("/computers")
 @Consumes(MediaType.APPLICATION_JSON)
@@ -62,5 +69,45 @@ public class ComputerResource {
 		
 		return uri;
 	}
+	
+	@POST
+	public Response addComputer(Computer computer, @Context UriInfo uriInfo) {
+		Computer newComputer = computerService.addComputer(computer);
+		URI uri = uriInfo.getAbsolutePathBuilder().path(computer.getComputerName()).build();
+		System.out.println(uri.toString());
+		computer.addLinks(String.valueOf(uri), "self");
+		
+		return Response.created(uri)
+						.status(Status.OK)
+						.entity(newComputer)
+						.build();
+	}
+	
+	@PUT
+	@Path("/{computerName}")
+	public Computer updateComputer(Computer computer, @PathParam("computerName") String computerName) {
+		computer.setComputerName(computerName);
+		return computerService.updateComputer(computer);
+	}
+	
+	@DELETE
+	@Path("/{compterName}")
+	public Computer deleteComputer(@PathParam("computerName") String computerName) {
+		return computerService.removeComputer(computerName);
+	}
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
