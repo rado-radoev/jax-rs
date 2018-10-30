@@ -1,9 +1,10 @@
 package org.superlamer.windowsupdate.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import javax.json.bind.annotation.JsonbTransient;
 import javax.xml.bind.annotation.XmlTransient;
 
 public class Computer {
@@ -12,6 +13,7 @@ public class Computer {
 	private String osVersion;
 	private List<Link> links = new ArrayList<>();
 	private static List<String> osVersions = new ArrayList<>();
+	private Map<Long, Update> updates = new HashMap<>();
 	
 	public Computer() {}
 	
@@ -39,7 +41,15 @@ public class Computer {
 		osVersion = oSType;
 	}
 	
-	@JsonbTransient
+	@XmlTransient
+	public Map<Long, Update> getUpdates() {
+		return updates;
+	}
+	
+	public void setUpdates(Map<Long, Update> updates) {
+		this.updates = updates;
+	}
+	
 	@XmlTransient
 	public static List<String> getOsVersions() {
 		return osVersions;

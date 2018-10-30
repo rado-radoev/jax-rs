@@ -95,6 +95,11 @@ public class ComputerResource {
 	public Computer deleteComputer(@PathParam("computerName") String computerName) {
 		return computerService.removeComputer(computerName);
 	}
+	
+	@Path("/{computerName}/updates")
+	public UpdateResource getUpdateResource() {
+		return new UpdateResource();
+	}
 
 }
 

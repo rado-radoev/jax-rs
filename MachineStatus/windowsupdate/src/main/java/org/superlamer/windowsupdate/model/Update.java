@@ -17,7 +17,7 @@ public class Update {
 		super();
 		this.kbNumber = kbNumber;
 		this.description = description;
-		name = name;
+		this.name = name;
 		this.size = size;
 	}
 	
