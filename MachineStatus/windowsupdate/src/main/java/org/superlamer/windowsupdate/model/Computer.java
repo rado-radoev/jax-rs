@@ -14,7 +14,7 @@ public class Computer {
 	
 	private String computerName;
 	private String osVersion;
-	private String updateStatus = "IN_PROGRESS";
+	private String updateStatus = UpdateStatusEnum.IN_PROGRESS.toString();
 	private boolean reboot;
 	private List<Link> links = new ArrayList<>();
 	private static List<String> osVersions = new ArrayList<>();
@@ -24,7 +24,7 @@ public class Computer {
 	
 	
 	public Computer(String computerName, String osVersion) {
-		this(computerName, osVersion, "IN_PROGRESS", false);
+		this(computerName, osVersion, UpdateStatusEnum.IN_PROGRESS.name(), false);
 	}
 	
 	public Computer(String computerName, String osVersion, String updateStatus) {

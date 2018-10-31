@@ -50,6 +50,10 @@ public class ComputerService {
 		return list.subList(start, start +  size); 
 	}
 	
+	public String getUpdateStatus(Computer computer) {
+		return computer.getUpdateStatus();
+	}
+	
 	public Computer getComputer(String name) {
 		return computers.get(name);
 	}

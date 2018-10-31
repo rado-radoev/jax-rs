@@ -71,6 +71,13 @@ public class ComputerResource {
 		return uri;
 	}
 	
+	/*
+	@POST
+	@Path("/{computerName}/updatestatus")
+	public Response changeUpdateStatus(@QueryParam("updateStatus")  ) {
+		
+	}
+	*/
 	private String getUriForUpdates(UriInfo uriInfo, Computer computer) {
 		URI uri = uriInfo.getBaseUriBuilder()
 						.path(ComputerResource.class)
