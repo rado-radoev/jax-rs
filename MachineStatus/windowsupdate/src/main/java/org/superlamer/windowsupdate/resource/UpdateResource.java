@@ -31,8 +31,6 @@ public class UpdateResource {
     						@Context UriInfo uriInfo) {
     	
     	Update update = updateService.getUpdte(computerName, kbNumber);
-    	update.addLinks(getUriForSelf(uriInfo, update), "self");
-    	
     	return update;
     }
     
@@ -41,7 +39,7 @@ public class UpdateResource {
     						Update update,
     						@Context UriInfo uriInfo) {
     	System.out.println("Update Resource - POST: " + computerName + " " + update.toString());
-
+    	updateService.addUpdate(computerName, update);
     	update.addLinks(getUriForSelf(uriInfo, update), "self");
     	
     	return update;

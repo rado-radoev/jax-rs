@@ -56,7 +56,7 @@ public class ComputerResource {
 								@Context UriInfo uriInfo) {
 		Computer computer = computerService.getComputer(computerName);
 		computer.addLinks(getUriForSelf(uriInfo, computer), "self");
-		computer.addLinks(getUriForUpdates(uriInfo, computer), "comments");
+		computer.addLinks(getUriForUpdates(uriInfo, computer), "updates");
 		
 		return computer;
 	}

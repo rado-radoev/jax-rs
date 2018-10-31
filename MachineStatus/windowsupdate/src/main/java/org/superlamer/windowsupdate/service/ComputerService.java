@@ -12,10 +12,11 @@ public class ComputerService {
 	private Map<String, Computer> computers = DatabaseClass.getComputers();
 	
 	public ComputerService() {
-		computers.put("PPHXAPP1CTXPM1", new Computer("PPHXAPP1CTXPM1", "2008 R2"));
-		computers.put("PPHXAPP2CTXPM1", new Computer("PPHXAPP2CTXPM1", "2016"));
-		computers.put("PPHXAPP3CTXPM1", new Computer("PPHXAPP3CTXPM1", "2012 R2"));
+		computers.put("PPHXAPP1CTXPM1", new Computer("PPHXAPP1CTXPM1", "2008 R2" ,"IN_PROGRESS"));
+		computers.put("PPHXAPP2CTXPM1", new Computer("PPHXAPP2CTXPM1", "2016", "COMPLETED"));
+		computers.put("PPHXAPP3CTXPM1", new Computer("PPHXAPP3CTXPM1", "2012 R2", "COMPLETED"));
 		computers.put("PPHXAPP4CTXPM1", new Computer("PPHXAPP4CTXPM1", "2012"));
+		computers.put("PPHXAPP5CTXPM1", new Computer("PPHXAPP5CTXPM1", "2012"));
 	}
 	
 	public List<Computer> getAllComputers() {

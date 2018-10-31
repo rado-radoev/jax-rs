@@ -11,16 +11,23 @@ public class Update {
 	private String description;
 	private String name;
 	private double size;
+	private boolean installed;
 	private List<Link> links = new ArrayList<>();
 	
 	public Update() {}
 	
 	public Update(long kbNumber, String description, String name, double size) {
+		this(kbNumber, description, name, size, false);
+	}
+	
+	public Update(long kbNumber, String description, String name, double size,
+					boolean installed) {
 		super();
 		this.kbNumber = kbNumber;
 		this.description = description;
 		this.name = name;
 		this.size = size;
+		this.installed = installed;
 	}
 	
 	public long getKbNumber() {
@@ -53,6 +60,14 @@ public class Update {
 	
 	public void setSize(double size) {
 		this.size = size;
+	}
+
+	public boolean isInstalled() {
+		return installed;
+	}
+
+	public void setInstalled(boolean installed) {
+		this.installed = installed;
 	}
 
 	@XmlTransient

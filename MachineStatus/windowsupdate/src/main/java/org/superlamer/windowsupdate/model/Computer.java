@@ -14,6 +14,8 @@ public class Computer {
 	
 	private String computerName;
 	private String osVersion;
+	private String updateStatus = "IN_PROGRESS";
+	private boolean reboot;
 	private List<Link> links = new ArrayList<>();
 	private static List<String> osVersions = new ArrayList<>();
 	private Map<Long, Update> updates = DatabaseClass.getUpdates();
@@ -22,9 +24,19 @@ public class Computer {
 	
 	
 	public Computer(String computerName, String osVersion) {
+		this(computerName, osVersion, "IN_PROGRESS", false);
+	}
+	
+	public Computer(String computerName, String osVersion, String updateStatus) {
+		this(computerName, osVersion, updateStatus, false);
+	}
+	
+	public Computer(String computerName, String osVersion, String updateStatus, boolean reboot) {
 		super();
 		this.computerName = computerName;
 		this.osVersion = osVersion;
+		this.updateStatus = updateStatus;
+		this.reboot = reboot;
 		addOsVersions(osVersion);
 	}
 
@@ -44,6 +56,11 @@ public class Computer {
 		osVersion = oSType;
 	}
 	
+
+	public static void setOsVersions(List<String> osVersions) {
+		Computer.osVersions = osVersions;
+	}
+
 
 	public Map<Long, Update> getUpdates() {
 		return updates;
@@ -68,7 +85,26 @@ public class Computer {
 		}
 	}
 	
-	@JsonbTransient
+	public String getUpdateStatus() {
+		return updateStatus;
+	}
+
+
+	public void setUpdateStatus(String updateStatus) {
+		this.updateStatus = updateStatus;
+	}
+
+
+	public boolean isReboot() {
+		return reboot;
+	}
+
+
+	public void setReboot(boolean reboot) {
+		this.reboot = reboot;
+	}
+
+
 	@XmlTransient
 	public List<Link> getLinks() {
 		return links;
