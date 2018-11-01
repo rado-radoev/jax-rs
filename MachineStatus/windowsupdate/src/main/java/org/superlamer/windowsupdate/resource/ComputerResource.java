@@ -9,6 +9,7 @@ import javax.ws.rs.DELETE;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
@@ -20,6 +21,7 @@ import javax.ws.rs.core.Response;
 
 import org.superlamer.windowsupdate.beans.ComputerFilterBeans;
 import org.superlamer.windowsupdate.model.Computer;
+import org.superlamer.windowsupdate.model.UpdateStatusEnum;
 import org.superlamer.windowsupdate.service.ComputerService;
 
 
@@ -71,12 +73,6 @@ public class ComputerResource {
 		return uri;
 	}
 	
-
-	@GET
-	@Path("/{computerName}/query")
-	public Response changeUpdateStatus(@QueryParam("updateStatus") String updateStatus ) {
-		
-	}
 
 	private String getUriForUpdates(UriInfo uriInfo, Computer computer) {
 		URI uri = uriInfo.getBaseUriBuilder()
